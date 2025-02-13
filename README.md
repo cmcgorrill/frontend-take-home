@@ -1,3 +1,5 @@
+[Frontend README](https://github.com/cmcgorrill/frontend-take-home/tree/main/client)
+
 # Frontend Take-Home Assignment
 
 Welcome to the WorkOS Frontend Take-Home Assignment!
