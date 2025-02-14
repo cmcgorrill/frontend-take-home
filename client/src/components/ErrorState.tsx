@@ -1,5 +1,5 @@
 import { CrossCircledIcon } from "@radix-ui/react-icons"
-import { Container, Flex, Heading, Spinner, Text } from "@radix-ui/themes"
+import { Container, Flex, Text } from "@radix-ui/themes"
 
 interface ErrorStateProps { message: string }
 

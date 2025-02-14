@@ -1,6 +1,6 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import useUsers from "../hooks/useUsers"
-import { Avatar, Box, Button, DropdownMenu, Flex, IconButton, Section, Skeleton, Spinner, Table, Text, TextField } from "@radix-ui/themes"
+import { Avatar, Box, Button, DropdownMenu, Flex, IconButton, Section, Skeleton, Table, Text, TextField } from "@radix-ui/themes"
 import { Role, User } from "../constants"
 import { DotsHorizontalIcon, MagnifyingGlassIcon, PlusIcon } from "@radix-ui/react-icons"
 import LoadingState from "./LoadingState"
@@ -11,7 +11,8 @@ interface UserTableProps {
 }
 
 const UserTable = ({ rolesData }: UserTableProps) => {
-  const { userData, usersIsLoading, userError } = useUsers()
+  const [search, setSearch] = useState<string>('')
+  const { userData, usersIsLoading, userError } = useUsers(search)
   useEffect(() => {
     console.log(userData)
   }, [userData])
@@ -19,7 +20,7 @@ const UserTable = ({ rolesData }: UserTableProps) => {
   return <Box>
     <Section size='1' style={{ marginTop: '-12px' }}>
       <Flex gap='2' width="100%">
-        <TextField.Root placeholder="Search by name…" style={{ width: "100%" }}>
+        <TextField.Root placeholder="Search by name…" style={{ width: "100%" }} onChange={(e) => setSearch(e.target.value)}>
           <TextField.Slot>
             <MagnifyingGlassIcon height="16" width="16" />
           </TextField.Slot>
