@@ -1,6 +1,6 @@
 import { useState } from "react"
 import useUsers from "../hooks/useUsers"
-import { Avatar, Box, Button, DropdownMenu, Flex, IconButton, Section, Skeleton, Table, Text, TextField } from "@radix-ui/themes"
+import { Avatar, Box, Button, Dialog, DropdownMenu, Flex, IconButton, Section, Skeleton, Strong, Table, Text, TextField } from "@radix-ui/themes"
 import { Role, User } from "../constants"
 import { DotsHorizontalIcon, MagnifyingGlassIcon, PlusIcon } from "@radix-ui/react-icons"
 import LoadingState from "./LoadingState"
@@ -56,32 +56,49 @@ const UserRow = ({ user, roles, deleteUser }: { user: User, roles: Role[] | unde
 
   const formattedDate = new Date(user.createdAt).toLocaleDateString(undefined, { month: 'short', day: "numeric", year: 'numeric' })
 
-  return <Table.Row>
-    <Table.Cell>
-      <Flex align='center' gap='2'>
-        <Avatar src={user.photo} fallback={user.first[0] + user.last[0]} radius="full" size="1" />
-        <Text><Skeleton loading={isDeleting}>{`${user.first} ${user.last}`}</Skeleton></Text>
+  return <Dialog.Root>
+
+    <Table.Row>
+      <Table.Cell>
+        <Flex align='center' gap='2'>
+          <Avatar src={user.photo} fallback={user.first[0] + user.last[0]} radius="full" size="1" />
+          <Text><Skeleton loading={isDeleting}>{`${user.first} ${user.last}`}</Skeleton></Text>
+        </Flex>
+      </Table.Cell>
+      <Table.Cell><Skeleton loading={isDeleting || !roles}>{roleName}</Skeleton></Table.Cell>
+      <Table.Cell><Skeleton loading={isDeleting}>{formattedDate}</Skeleton></Table.Cell>
+      <Table.Cell>
+        <Flex justify="end" align="center" minHeight='100%'>
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger>
+              <IconButton radius="full" size='1' variant="ghost" color='gray' ><DotsHorizontalIcon /></IconButton>
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Content>
+              <DropdownMenu.Item>Edit user</DropdownMenu.Item>
+              <Dialog.Trigger>
+                <DropdownMenu.Item>Delete user</DropdownMenu.Item>
+              </Dialog.Trigger>
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
+        </Flex>
+      </Table.Cell>
+    </Table.Row>
+    <Dialog.Content size="2">
+      <Dialog.Title>Delete user</Dialog.Title>
+
+      <Flex direction="column" gap="3" width="100%">
+        <Text>Are you sure? The user <Strong>{`${user.first} ${user.last}`}</Strong> will be permanently deleted.</Text>
+        <Flex gap="3" justify="end">
+          <Dialog.Close><Button color="gray" variant="surface">Cancel</Button></Dialog.Close>
+          <Dialog.Close><Button color="red" variant="surface" onClick={() => {
+            setIsDeleting(true)
+            deleteUser(user.id)
+          }}>Delete</Button></Dialog.Close>
+        </Flex>
       </Flex>
-    </Table.Cell>
-    <Table.Cell><Skeleton loading={isDeleting || !roles}>{roleName}</Skeleton></Table.Cell>
-    <Table.Cell><Skeleton loading={isDeleting}>{formattedDate}</Skeleton></Table.Cell>
-    <Table.Cell>
-      <Flex justify="end" align="center" minHeight='100%'>
-        <DropdownMenu.Root>
-          <DropdownMenu.Trigger>
-            <IconButton radius="full" size='1' variant="ghost" color='gray' ><DotsHorizontalIcon /></IconButton>
-          </DropdownMenu.Trigger>
-          <DropdownMenu.Content>
-            <DropdownMenu.Item>Edit user</DropdownMenu.Item>
-            <DropdownMenu.Item onClick={() => {
-              setIsDeleting(true)
-              deleteUser(user.id)
-            }}>Delete user</DropdownMenu.Item>
-          </DropdownMenu.Content>
-        </DropdownMenu.Root>
-      </Flex>
-    </Table.Cell>
-  </Table.Row>
+    </Dialog.Content>
+  </Dialog.Root>
+
 }
 
 export default UserTable

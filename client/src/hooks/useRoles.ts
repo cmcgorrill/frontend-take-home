@@ -24,7 +24,7 @@ const useRoles = (): RolesQueryData => {
     updateMutation.mutate({ roleId, newName })
   }
 
-  return { data, isLoading, onUpdate, updatePending: updateMutation.isPending }
+  return { data, isLoading, onUpdate }
 }
 
 const getRoles = (): Promise<Role[]> => axios.get(ROLES_API_URL).then(res => res.data.data)
