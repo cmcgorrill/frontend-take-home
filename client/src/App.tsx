@@ -8,12 +8,12 @@ function App() {
   const rolesQueryData = useRoles()
 
   return (
-    <Box className="App" style={{ padding: '8px 40px' }}>
+    <Box className="App" style={{ padding: '0 40px' }}>
       <Container>
         <Tabs.Root defaultValue="users">
           <Tabs.List>
-            <Tabs.Trigger value="users">Users</Tabs.Trigger>
-            <Tabs.Trigger value="roles">Roles</Tabs.Trigger>
+            <Tabs.Trigger className="tab" value="users">Users</Tabs.Trigger>
+            <Tabs.Trigger className="tab" value="roles">Roles</Tabs.Trigger>
           </Tabs.List>
 
           <Box pt="3">

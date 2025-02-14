@@ -12,7 +12,7 @@ interface UserTableProps {
 
 const UserTable = ({ rolesData }: UserTableProps) => {
   const [search, setSearch] = useState<string>('')
-  const { userData, usersIsLoading, deleteUser } = useUsers(search)
+  const { userData, usersIsLoading, deleteUser, onNext, onPrev } = useUsers(search)
 
 
   return <Box>
@@ -40,6 +40,21 @@ const UserTable = ({ rolesData }: UserTableProps) => {
         </Table.Header>
         <Table.Body>
           {userData.data.map((user) => <UserRow user={user} roles={rolesData} deleteUser={deleteUser} key={user.id} />)}
+          <Table.Row>
+            <Table.Cell />
+            <Table.Cell />
+            <Table.Cell />
+            <Table.Cell>
+              <Flex gap="2" width="100%" justify="end">
+                <Button color="gray" variant="outline" size="1" highContrast disabled={!userData.prev} onClick={onPrev}>
+                  <Text weight='bold'>Previous</Text>
+                </Button>
+                <Button color="gray" variant="outline" size="1" highContrast disabled={!userData.next} onClick={onNext}>
+                  <Text weight='bold'>Next</Text>
+                </Button>
+              </Flex>
+            </Table.Cell>
+          </Table.Row>
         </Table.Body>
       </Table.Root>
     }
