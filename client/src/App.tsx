@@ -1,7 +1,10 @@
 import { Box, Container, Tabs, Text } from '@radix-ui/themes';
 import './App.css';
+import UserTable from './components/UserTable';
+import useRoles from './hooks/useRoles';
 
 function App() {
+  const { rolesData } = useRoles()
   return (
     <Box className="App" style={{ padding: '8px 40px' }}>
       <Container>
@@ -13,7 +16,7 @@ function App() {
 
           <Box pt="3">
             <Tabs.Content value="users">
-              <Text size="2">Got users?</Text>
+              <UserTable rolesData={rolesData} />
             </Tabs.Content>
 
             <Tabs.Content value="roles">
