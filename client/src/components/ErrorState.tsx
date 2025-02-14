@@ -6,7 +6,7 @@ interface ErrorStateProps { message: string }
 const ErrorState = ({ message }: ErrorStateProps) => {
   return <Container>
     <Flex direction='column' gap='2' minWidth='100%' minHeight='80vh' align='center' justify='center'>
-      <CrossCircledIcon />
+      <CrossCircledIcon height='120' width='120' />
       <Text>{message}</Text>
     </Flex>
   </Container>

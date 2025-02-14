@@ -4,8 +4,8 @@ import axios from "axios"
 
 
 const useRoles = () => {
-  const { data, isLoading, error } = useQuery<Role[]>({ queryKey: ['roles'], queryFn: getUsers })
-  return { rolesData: data, rolesIsLoading: isLoading, rolesError: error }
+  const rolesQuery = useQuery<Role[]>({ queryKey: ['roles'], queryFn: getUsers })
+  return rolesQuery
 }
 
 const getUsers = (): Promise<Role[]> => axios.get(ROLES_API_URL).then(res => res.data.data)

@@ -18,6 +18,7 @@ const UserTable = ({ rolesData }: UserTableProps) => {
     deleteUser.mutate(userId)
   }
 
+
   return <Box>
     <Section size='1' style={{ marginTop: '-12px' }}>
       <Flex gap='2' width="100%">
