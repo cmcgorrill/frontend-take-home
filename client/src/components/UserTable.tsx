@@ -14,10 +14,6 @@ const UserTable = ({ rolesData }: UserTableProps) => {
   const [search, setSearch] = useState<string>('')
   const { userData, usersIsLoading, deleteUser } = useUsers(search)
 
-  const onDelete = (userId: string) => {
-    deleteUser.mutate(userId)
-  }
-
 
   return <Box>
     <Section size='1' style={{ marginTop: '-12px' }}>
@@ -43,7 +39,7 @@ const UserTable = ({ rolesData }: UserTableProps) => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {userData.data.map((user) => <UserRow user={user} roles={rolesData} deleteUser={onDelete} key={user.id} />)}
+          {userData.data.map((user) => <UserRow user={user} roles={rolesData} deleteUser={deleteUser} key={user.id} />)}
         </Table.Body>
       </Table.Root>
     }

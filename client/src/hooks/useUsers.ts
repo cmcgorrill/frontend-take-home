@@ -8,13 +8,17 @@ const useUsers = (search: string) => {
 
   const { data, isLoading } = useQuery<UserResponse>({ queryKey: ['users', search], queryFn: () => getUsers(search) })
 
-  const deleteUser = useMutation({
+  const deleteMutation = useMutation({
     mutationFn: (userId: string) => deleteUserFn(userId),
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ['users'] })
     },
   })
+
+  const deleteUser = (userId: string) => {
+    deleteMutation.mutate(userId)
+  }
 
   return { userData: data, usersIsLoading: isLoading, deleteUser }
 }

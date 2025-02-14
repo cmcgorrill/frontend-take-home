@@ -1,13 +1,34 @@
-import { useQuery } from "@tanstack/react-query"
-import { Role, ROLES_API_URL } from "../constants"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { Role, ROLES_API_URL, RolesQueryData } from "../constants"
 import axios from "axios"
 
-
-const useRoles = () => {
-  const rolesQuery = useQuery<Role[]>({ queryKey: ['roles'], queryFn: getUsers })
-  return rolesQuery
+interface RolePatchParams {
+  roleId: string
+  newName: string
 }
 
-const getUsers = (): Promise<Role[]> => axios.get(ROLES_API_URL).then(res => res.data.data)
+const useRoles = (): RolesQueryData => {
+  const queryClient = useQueryClient()
+
+  const { data, isLoading } = useQuery<Role[]>({ queryKey: ['roles'], queryFn: getRoles })
+
+  const updateMutation = useMutation({
+    mutationFn: (params: RolePatchParams) => updateRoleName(params),
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ['roles'] })
+    },
+  })
+
+  const onUpdate = (roleId: string, newName: string) => {
+    updateMutation.mutate({ roleId, newName })
+  }
+
+  return { data, isLoading, onUpdate, updatePending: updateMutation.isPending }
+}
+
+const getRoles = (): Promise<Role[]> => axios.get(ROLES_API_URL).then(res => res.data.data)
+const updateRoleName = (params: RolePatchParams) => axios.patch(`${ROLES_API_URL}/${params.roleId}`, { name: params.newName })
+
 
 export default useRoles

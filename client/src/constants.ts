@@ -26,3 +26,10 @@ export interface Role {
   description?: string
   isDefault: boolean
 }
+
+export interface RolesQueryData {
+  data: Role[] | undefined
+  isLoading: boolean
+  onUpdate: (roleId: string, name: string) => void
+  updatePending: boolean
+}

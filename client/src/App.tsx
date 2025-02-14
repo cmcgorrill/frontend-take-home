@@ -5,7 +5,8 @@ import useRoles from './hooks/useRoles';
 import RoleTable from './components/RoleTable';
 
 function App() {
-  const rolesQuery = useRoles()
+  const rolesQueryData = useRoles()
+
   return (
     <Box className="App" style={{ padding: '8px 40px' }}>
       <Container>
@@ -17,11 +18,11 @@ function App() {
 
           <Box pt="3">
             <Tabs.Content value="users">
-              <UserTable rolesData={rolesQuery.data} />
+              <UserTable rolesData={rolesQueryData.data} />
             </Tabs.Content>
 
             <Tabs.Content value="roles">
-              <Text size="2"><RoleTable roles={rolesQuery.data} rolesLoading={rolesQuery.isLoading} /></Text>
+              <Text size="2"><RoleTable rolesQueryData={rolesQueryData} /></Text>
             </Tabs.Content>
 
           </Box>
