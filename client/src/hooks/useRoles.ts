@@ -15,7 +15,6 @@ const useRoles = (): RolesQueryData => {
   const updateMutation = useMutation({
     mutationFn: (params: RolePatchParams) => updateRoleName(params),
     onSuccess: () => {
-      // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ['roles'] })
     },
   })
@@ -28,7 +27,9 @@ const useRoles = (): RolesQueryData => {
 }
 
 const getRoles = (): Promise<Role[]> => axios.get(ROLES_API_URL).then(res => res.data.data)
-const updateRoleName = (params: RolePatchParams) => axios.patch(`${ROLES_API_URL}/${params.roleId}`, { name: params.newName })
+
+const updateRoleName = (params: RolePatchParams) =>
+  axios.patch(`${ROLES_API_URL}/${params.roleId}`, { name: params.newName })
 
 
 export default useRoles

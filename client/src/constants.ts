@@ -32,3 +32,6 @@ export interface RolesQueryData {
   isLoading: boolean
   onUpdate: (roleId: string, name: string) => void
 }
+
+export const formatDate = (timestamp: string) =>
+  new Date(timestamp).toLocaleDateString(undefined, { month: 'short', day: "numeric", year: 'numeric' })

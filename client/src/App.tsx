@@ -15,16 +15,13 @@ function App() {
             <Tabs.Trigger className="tab" value="users">Users</Tabs.Trigger>
             <Tabs.Trigger className="tab" value="roles">Roles</Tabs.Trigger>
           </Tabs.List>
-
           <Box pt="3">
             <Tabs.Content value="users">
               <UserTable rolesData={rolesQueryData.data} />
             </Tabs.Content>
-
             <Tabs.Content value="roles">
               <Text size="2"><RoleTable rolesQueryData={rolesQueryData} /></Text>
             </Tabs.Content>
-
           </Box>
         </Tabs.Root>
       </Container>

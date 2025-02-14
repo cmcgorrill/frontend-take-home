@@ -1,7 +1,7 @@
 import { useState } from "react"
 import useUsers from "../hooks/useUsers"
 import { Avatar, Box, Button, Dialog, DropdownMenu, Flex, IconButton, Section, Skeleton, Strong, Table, Text, TextField } from "@radix-ui/themes"
-import { Role, User } from "../constants"
+import { formatDate, Role, User } from "../constants"
 import { DotsHorizontalIcon, MagnifyingGlassIcon, PlusIcon } from "@radix-ui/react-icons"
 import LoadingState from "./LoadingState"
 import ErrorState from "./ErrorState"
@@ -58,7 +58,6 @@ const UserTable = ({ rolesData }: UserTableProps) => {
         </Table.Body>
       </Table.Root>
     }
-
   </Box>
 }
 
@@ -69,10 +68,7 @@ const UserRow = ({ user, roles, deleteUser }: { user: User, roles: Role[] | unde
   const role = roles?.find(role => role.id === user.roleId)
   roleName = role?.name ?? roleName
 
-  const formattedDate = new Date(user.createdAt).toLocaleDateString(undefined, { month: 'short', day: "numeric", year: 'numeric' })
-
   return <Dialog.Root>
-
     <Table.Row>
       <Table.Cell>
         <Flex align='center' gap='2'>
@@ -81,7 +77,7 @@ const UserRow = ({ user, roles, deleteUser }: { user: User, roles: Role[] | unde
         </Flex>
       </Table.Cell>
       <Table.Cell><Skeleton loading={isDeleting || !roles}>{roleName}</Skeleton></Table.Cell>
-      <Table.Cell><Skeleton loading={isDeleting}>{formattedDate}</Skeleton></Table.Cell>
+      <Table.Cell><Skeleton loading={isDeleting}>{formatDate(user.createdAt)}</Skeleton></Table.Cell>
       <Table.Cell>
         <Flex justify="end" align="center" minHeight='100%'>
           <DropdownMenu.Root>
@@ -100,7 +96,6 @@ const UserRow = ({ user, roles, deleteUser }: { user: User, roles: Role[] | unde
     </Table.Row>
     <Dialog.Content size="2">
       <Dialog.Title>Delete user</Dialog.Title>
-
       <Flex direction="column" gap="3" width="100%">
         <Text>Are you sure? The user <Strong>{`${user.first} ${user.last}`}</Strong> will be permanently deleted.</Text>
         <Flex gap="3" justify="end">
@@ -113,7 +108,6 @@ const UserRow = ({ user, roles, deleteUser }: { user: User, roles: Role[] | unde
       </Flex>
     </Dialog.Content>
   </Dialog.Root>
-
 }
 
 export default UserTable

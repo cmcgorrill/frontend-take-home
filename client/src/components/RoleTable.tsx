@@ -1,5 +1,5 @@
 import { Box, Button, Dialog, DropdownMenu, Flex, IconButton, Table, Text, TextField } from "@radix-ui/themes"
-import { Role, RolesQueryData } from "../constants"
+import { formatDate, Role, RolesQueryData } from "../constants"
 import ErrorState from "./ErrorState"
 import LoadingState from "./LoadingState"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
@@ -38,10 +38,6 @@ interface RoleRowProps {
 
 const RoleRow = ({ role, updateRole }: RoleRowProps) => {
   const [name, setName] = useState<string>(role.name)
-  const formatDate = (timestamp: string) => {
-    const date = new Date(timestamp)
-    return date.toLocaleDateString(undefined, { month: 'short', day: "numeric", year: 'numeric' })
-  }
 
   return <Dialog.Root>
     <Table.Row>
